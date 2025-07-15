@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "359912929860",
+    "project_id": "crudmethodpractice",
+    "storage_bucket": "crudmethodpractice.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:359912929860:android:ecb9cb9ef8770ab7db9a11",
+        "android_client_info": {
+          "package_name": "com.example.practice_method"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKoKlR61u3eICeK9BYPqcnEvFZI48O3YM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
