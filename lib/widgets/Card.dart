@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:practice_method/view/detailsPage.dart';
 
 class CardWidgets extends StatelessWidget {
   const CardWidgets({
-    super.key, required this.category,
+    super.key,
+    required this.category,
   });
 
   // ignore: prefer_typing_uninitialized_variables
@@ -10,7 +13,9 @@ class CardWidgets extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Get.to(() => Detailspage());
+      },
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
       child: Card(
