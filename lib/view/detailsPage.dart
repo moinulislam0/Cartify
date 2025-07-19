@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:practice_method/view/cart_list.dart';
+import 'package:practice_method/view/CartList.dart';
 import 'package:practice_method/widgets/stepperCount.dart';
 
 class Detailspage extends StatefulWidget {
@@ -171,7 +171,7 @@ class _DetailspageState extends State<Detailspage> {
                     ),
                     ElevatedButton(
                         onPressed: () {
-                          Get.to(CartList());
+                          Get.to(Cartlist());
                         },
                         child: Text("Add to cart"))
                   ],

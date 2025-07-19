@@ -12,35 +12,35 @@ class Steppercount extends StatefulWidget {
 class _SteppercountState extends State<Steppercount> {
   TextEditingController stepCount = TextEditingController();
   int selectIndex = 0;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {
+      selectIndex;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
         TextButton(
             onPressed: () {
               if (selectIndex < 20) {
                 selectIndex++;
-                stepCount.text = selectIndex.toString();
+                setState(() {});
                 widget.onIncrement(selectIndex);
               }
             },
             child: Icon(Icons.add)),
-        SizedBox(
-          width: 44,
-          child: TextField(
-            controller: stepCount,
-            style: TextStyle(color: Colors.black),
-            enabled: false,
-            decoration: InputDecoration(
-                border: OutlineInputBorder(borderSide: BorderSide.none)),
-          ),
-        ),
+        Text('$selectIndex'),
         TextButton(
             onPressed: () {
               if (selectIndex > 0) {
                 selectIndex--;
-                stepCount.text = selectIndex.toString();
+                setState(() {});
                 widget.onDecrement(selectIndex);
               }
             },
