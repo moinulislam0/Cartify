@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:practice_method/widgets/wishCart.dart';
 
-class CartList extends StatefulWidget {
-  const CartList({super.key});
+class Wishlist extends StatefulWidget {
+  const Wishlist({super.key});
 
   @override
-  State<CartList> createState() => _CartListState();
+  State<Wishlist> createState() => _WishlistState();
 }
 
-class _CartListState extends State<CartList> {
+class _WishlistState extends State<Wishlist> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

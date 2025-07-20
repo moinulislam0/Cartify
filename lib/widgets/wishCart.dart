@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:practice_method/widgets/stepperCount.dart';
 
 class Wishcart extends StatelessWidget {
   const Wishcart({super.key});
@@ -38,7 +37,7 @@ class Wishcart extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Text(
-                            "Most Beautiful Good  Quality Products or Every Person",
+                            "Most Beautiful Good  Quality Products For Every Person",
                             style: TextStyle(fontSize: 16),
                             overflow: TextOverflow.ellipsis,
                             softWrap: true,
@@ -66,9 +65,6 @@ class Wishcart extends StatelessWidget {
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 16),
                         ),
-                        Steppercount(
-                            onIncrement: (int currentvalue) {},
-                            onDecrement: (int currentvalue) {}),
                         IconButton(
                             onPressed: () {}, icon: Icon(Icons.shopping_cart))
                       ],

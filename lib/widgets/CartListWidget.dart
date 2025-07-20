@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:practice_method/widgets/stepperCount.dart';
 
 class Cartlistwidget extends StatefulWidget {
   const Cartlistwidget({super.key});
@@ -19,7 +20,7 @@ class _CartlistwidgetState extends State<Cartlistwidget> {
             borderRadius: BorderRadius.circular(11),
             border: Border.all(
                 width: 1, color: const Color.fromARGB(255, 197, 196, 196))),
-        height: 150,
+        height: 200,
         width: double.infinity,
         child: Column(
           children: [
@@ -91,6 +92,32 @@ class _CartlistwidgetState extends State<Cartlistwidget> {
                         ],
                       )
                     ],
+                  )
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 10, left: 4),
+              child: Text(
+                  "-------------------------------------------------------------------------------------",
+                  overflow: TextOverflow.ellipsis),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 12, left: 18),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    " ৳ 700",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(width: 1),
+                        borderRadius: BorderRadius.circular(25)),
+                    child: Steppercount(
+                        onIncrement: (int value) {},
+                        onDecrement: (int value) {}),
                   )
                 ],
               ),
