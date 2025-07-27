@@ -39,8 +39,9 @@ dependencies:
   firebase_core: ^3.15.1
   firebase_auth: ^5.6.2
   cloud_firestore: ^5.6.11
-  flutter_phone_direct_caller: ^2.2.1
   rating: ^1.0.0-dev.1
+  bkash: ^0.0.1
+  flutter_sslcommerz: ^2.5.1
 
 dev_dependencies:
   flutter_test:

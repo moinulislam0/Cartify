@@ -75,7 +75,7 @@ class _CategoriesState extends State<Categories> {
               shrinkWrap: true,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                childAspectRatio: 1,
+                childAspectRatio: .7,
               ),
               itemCount: itemsToShow.length,
               itemBuilder: (context, index) {

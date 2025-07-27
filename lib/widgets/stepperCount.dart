@@ -11,7 +11,7 @@ class Steppercount extends StatefulWidget {
 
 class _SteppercountState extends State<Steppercount> {
   TextEditingController stepCount = TextEditingController();
-  int selectIndex = 0;
+  int selectIndex = 1;
   @override
   void initState() {
     // TODO: implement initState
@@ -38,7 +38,7 @@ class _SteppercountState extends State<Steppercount> {
         Text('$selectIndex'),
         TextButton(
             onPressed: () {
-              if (selectIndex > 0) {
+              if (selectIndex > 1) {
                 selectIndex--;
                 setState(() {});
                 widget.onDecrement(selectIndex);

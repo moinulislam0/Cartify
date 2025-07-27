@@ -76,13 +76,14 @@ class _CartlistwidgetState extends State<Cartlistwidget> {
                                 child: Padding(
                                   padding: EdgeInsets.only(right: 4),
                                   child: CircleAvatar(
-                                    radius: 12,
+                                    radius: 10,
                                     backgroundColor: color,
                                     child: Visibility(
                                         visible: Selectcolors == color,
                                         child: Icon(
                                           Icons.check,
                                           color: Colors.white,
+                                          size: 8,
                                         )),
                                   ),
                                 ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:practice_method/view/payment.dart';
 import 'package:practice_method/view/wishList.dart';
 import 'package:practice_method/widgets/CartListWidget.dart';
 
@@ -57,16 +58,16 @@ class Cartlist extends StatelessWidget {
                   ),
                   ElevatedButton(
                       onPressed: () {
-                        Get.to(() => Wishlist());
+                        Get.to(() => PaymentScreen());
                       },
-                      child: Text(
-                        "CheckOut",
-                        style: TextStyle(color: Colors.pink),
-                      ),
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10))))
+                              borderRadius: BorderRadius.circular(10))),
+                      child: Text(
+                        "CheckOut",
+                        style: TextStyle(color: Colors.pink),
+                      ))
                 ],
               ),
             ),

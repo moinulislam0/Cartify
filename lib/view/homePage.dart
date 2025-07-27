@@ -14,6 +14,7 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   final user = FirebaseAuth.instance.currentUser!;
   TextEditingController search = TextEditingController();
+
   Future<DocumentSnapshot> getData() async {
     return await FirebaseFirestore.instance
         .collection('userdata')
@@ -28,162 +29,219 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color.fromARGB(255, 238, 238, 238),
-        appBar: AppBar(
-          backgroundColor: Colors.pink,
-          actions: [
-            IconButton(
-                onPressed: () async {
-                  await signOut();
-                },
-                icon: Icon(
-                  Icons.logout,
-                  color: Colors.white,
-                )),
-          ],
-          leading: Builder(builder: (context) {
+      backgroundColor: const Color.fromARGB(255, 238, 238, 238),
+      appBar: AppBar(
+        backgroundColor: Colors.pink,
+        actions: [
+          IconButton(
+              onPressed: () async {
+                await signOut();
+              },
+              icon: Icon(Icons.logout, color: Colors.white)),
+        ],
+        leading: Builder(
+          builder: (context) {
             return IconButton(
-                onPressed: () {
-                  Scaffold.of(context).openDrawer();
-                },
-                icon: Icon(
-                  Icons.menu,
-                  color: Colors.white,
-                ));
-          }),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+              icon: Icon(Icons.menu, color: Colors.white),
+            );
+          },
         ),
-        drawer: Drawer(
-          child: FutureBuilder(
-            future: getData(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(
-                    child: CircularProgressIndicator(color: Colors.blue));
-              } else if (snapshot.hasError) {
-                return Center(
-                    child: Text("Error loading user data",
-                        style: TextStyle(color: Colors.black)));
-              } else if (!snapshot.hasData || !snapshot.data!.exists) {
-                return Center(
-                    child: Text("User not found",
-                        style: TextStyle(color: Colors.black)));
-              }
+      ),
+      drawer: Drawer(
+        child: FutureBuilder(
+          future: getData(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                  child: CircularProgressIndicator(color: Colors.blue));
+            } else if (snapshot.hasError) {
+              return Center(
+                  child: Text("Error loading user data",
+                      style: TextStyle(color: Colors.black)));
+            } else if (!snapshot.hasData || !snapshot.data!.exists) {
+              return Center(
+                  child: Text("User not found",
+                      style: TextStyle(color: Colors.black)));
+            }
 
-              var userdata = snapshot.data!;
-              return ListView(
-                children: [
-                  DrawerHeader(
-                    decoration: BoxDecoration(color: Colors.pink),
-                    child: Column(
-                      children: [
-                        CircleAvatar(
-                          radius: 30,
-                          backgroundImage: NetworkImage(
-                            '', // Fallback image
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        Text(
-                          '${userdata['username']}',
-                          style: TextStyle(color: Colors.white, fontSize: 18),
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                          '${user.email}',
-                          style: TextStyle(color: Colors.white70, fontSize: 14),
-                        )
-                      ],
-                    ),
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.home),
-                    title: Text("Home"),
-                    onTap: () {},
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.settings),
-                    title: Text("Settings"),
-                    onTap: () {},
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.logout),
-                    title: Text("Logout"),
-                    onTap: () async => await signOut(),
-                  ),
-                ],
-              );
-            },
-          ),
-        ),
-
-        // ✅ Body showing same user data (optional)
-        body: FutureBuilder(
-            future: getData(),
-            builder: (context, snapshot) {
-              var data = snapshot.data;
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SingleChildScrollView(
+            var userdata = snapshot.data!;
+            return ListView(
+              children: [
+                DrawerHeader(
+                  decoration: BoxDecoration(color: Colors.pink),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Hello ${data?['username']} ,What fruits salad \ncombo do you want today",
-                        style: TextStyle(
-                            fontSize: 20, fontStyle: FontStyle.italic),
-                      ),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      TextField(
-                        controller: search,
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                          hintText: "Search",
-                          prefixIcon: Icon(Icons.search),
-                          fillColor: Colors.white,
-                          filled: true,
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: BorderSide.none),
+                      CircleAvatar(
+                        radius: 30,
+                        backgroundImage: NetworkImage(
+                          '', // Fallback image
                         ),
                       ),
-                      SizedBox(
-                        height: 35,
-                      ),
+                      SizedBox(height: 10),
                       Text(
-                        "Recommeded Combo",
-                        style: TextStyle(color: Colors.black, fontSize: 20),
+                        '${userdata['username']}',
+                        style: TextStyle(color: Colors.white, fontSize: 18),
                       ),
-                      GridView.builder(
-                        shrinkWrap: true,
-                        physics:
-                            NeverScrollableScrollPhysics(), // Disable GridView's own scrolling
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 10,
-                          crossAxisSpacing: 10,
-                          childAspectRatio: 1,
-                        ),
-                        itemCount: 2,
-                        itemBuilder: (context, index) {
-                          return CardWidgets(
-                            category: "Nothing",
-                          );
-                        },
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
+                      SizedBox(height: 5),
                       Text(
-                        "Categories",
-                        style: TextStyle(fontSize: 20, color: Colors.black),
-                      ),
-                      Categories(),
+                        '${user.email}',
+                        style: TextStyle(color: Colors.white70, fontSize: 14),
+                      )
                     ],
                   ),
                 ),
-              );
-            }));
+                ListTile(
+                  leading: Icon(Icons.home),
+                  title: Text("Home"),
+                  onTap: () {},
+                ),
+                ListTile(
+                  leading: Icon(Icons.settings),
+                  title: Text("Settings"),
+                  onTap: () {},
+                ),
+                ListTile(
+                  leading: Icon(Icons.logout),
+                  title: Text("Logout"),
+                  onTap: () async => await signOut(),
+                ),
+              ],
+            );
+          },
+        ),
+      ),
+      body: FutureBuilder(
+        future: getData(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }
+
+          var data = snapshot.data;
+
+          return SafeArea(
+            child: CustomScrollView(
+              slivers: [
+                // Greeting text
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Hello ${data?['username'] ?? ''}, What fruits salad \ncombo do you want today",
+                      style:
+                          TextStyle(fontSize: 20, fontStyle: FontStyle.italic),
+                    ),
+                  ),
+                ),
+
+                // Sticky Search Bar
+                SliverPersistentHeader(
+                  pinned: true,
+                  delegate: _SearchBarDelegate(search),
+                ),
+
+                // Recommended Combo title
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 8.0, vertical: 10),
+                    child: Text(
+                      "Recommended Combo",
+                      style: TextStyle(color: Colors.black, fontSize: 20),
+                    ),
+                  ),
+                ),
+
+                // Grid content
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: GridView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 10,
+                        crossAxisSpacing: 10,
+                        childAspectRatio: .7,
+                      ),
+                      itemCount: 2,
+                      itemBuilder: (context, index) {
+                        return CardWidgets(category: "Nothing");
+                      },
+                    ),
+                  ),
+                ),
+
+                // Categories title
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Categories",
+                      style: TextStyle(fontSize: 20, color: Colors.black),
+                    ),
+                  ),
+                ),
+
+                // Categories widget
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Categories(),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
   }
+}
+
+// ✅ Sticky SearchBar Delegate
+class _SearchBarDelegate extends SliverPersistentHeaderDelegate {
+  final TextEditingController controller;
+
+  _SearchBarDelegate(this.controller);
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return Container(
+      color: Colors.white,
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10),
+      child: Material(
+        elevation: 4,
+        borderRadius: BorderRadius.circular(8),
+        child: TextField(
+          controller: controller,
+          decoration: InputDecoration(
+            hintText: "Search",
+            prefixIcon: Icon(Icons.search),
+            filled: true,
+            fillColor: Colors.white,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide.none,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  double get maxExtent => 70;
+
+  @override
+  double get minExtent => 70;
+
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) =>
+      true;
 }
