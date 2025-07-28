@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 import 'package:practice_method/view/wishList.dart';
 
 class Detialimageswidget extends StatefulWidget {
-  const Detialimageswidget({super.key});
+  final String? thumbail;
+  Detialimageswidget({super.key, this.thumbail});
 
   @override
   State<Detialimageswidget> createState() => _DetialimageswidgetState();
@@ -26,14 +27,13 @@ class _DetialimageswidgetState extends State<Detialimageswidget> {
                 duration: const Duration(milliseconds: 400),
                 curve: Curves.easeInOut,
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: Image.asset(
-                    'assets/images/card_images.PNG',
-                    width: 300,
-                    height: 300,
-                    fit: BoxFit.cover,
-                  ),
-                ),
+                    borderRadius: BorderRadius.circular(12),
+                    child: Image.network(
+                      widget.thumbail!,
+                      width: 300,
+                      height: 300,
+                      fit: BoxFit.cover,
+                    )),
               ),
             ),
           ),

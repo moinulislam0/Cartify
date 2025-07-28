@@ -2,7 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:practice_method/widgets/stepperCount.dart';
 
 class Cartlistwidget extends StatefulWidget {
-  const Cartlistwidget({super.key});
+  final String? thumbail;
+  final String? title;
+  final Color? color;
+  final String? price;
+  final String? description;
+  Cartlistwidget(
+      {super.key,
+      this.thumbail,
+      this.title,
+      this.color,
+      this.price,
+      this.description});
 
   @override
   State<Cartlistwidget> createState() => _CartlistwidgetState();
@@ -34,65 +45,67 @@ class _CartlistwidgetState extends State<Cartlistwidget> {
                     padding: EdgeInsets.all(8),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: Image.asset(
-                        "assets/images/card_images.PNG",
+                      child: Image.network(
+                        widget.thumbail.toString(),
                       ),
                     ),
                   ),
                   SizedBox(width: 10),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Most Beautiful Good Quality",
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        "Rodeo Medium ostrich-effect leat",
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        style: TextStyle(
-                          fontSize: 16,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "${widget.title ?? ''}",
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
                         ),
-                      ),
-                      Wrap(
-                        children: [
-                          Text(
-                            "Color :",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
+                        Text(
+                          widget.description.toString(),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: TextStyle(
+                            fontSize: 16,
                           ),
-                          Row(
-                            children: colors.map((color) {
-                              return InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    Selectcolors = color;
-                                  });
-                                },
-                                child: Padding(
-                                  padding: EdgeInsets.only(right: 4),
-                                  child: CircleAvatar(
-                                    radius: 10,
-                                    backgroundColor: color,
-                                    child: Visibility(
-                                        visible: Selectcolors == color,
-                                        child: Icon(
-                                          Icons.check,
-                                          color: Colors.white,
-                                          size: 8,
-                                        )),
+                        ),
+                        Wrap(
+                          children: [
+                            Text(
+                              "Color :",
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+                            Row(
+                              children: colors.map((color) {
+                                return InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      Selectcolors = color;
+                                    });
+                                  },
+                                  child: Padding(
+                                    padding: EdgeInsets.only(right: 4),
+                                    child: CircleAvatar(
+                                      radius: 10,
+                                      backgroundColor: color,
+                                      child: Visibility(
+                                          visible: Selectcolors == color,
+                                          child: Icon(
+                                            Icons.check,
+                                            color: Colors.white,
+                                            size: 8,
+                                          )),
+                                    ),
                                   ),
-                                ),
-                              );
-                            }).toList(),
-                          )
-                        ],
-                      )
-                    ],
+                                );
+                              }).toList(),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
                   )
                 ],
               ),
@@ -109,7 +122,7 @@ class _CartlistwidgetState extends State<Cartlistwidget> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    " ৳ 700",
+                    " ৳ ${widget.price.toString()}",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                   Container(

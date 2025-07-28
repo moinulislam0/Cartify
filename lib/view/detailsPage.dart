@@ -5,7 +5,18 @@ import 'package:practice_method/widgets/detialimagesWidget.dart';
 import 'package:practice_method/widgets/stepperCount.dart';
 
 class Detailspage extends StatefulWidget {
-  const Detailspage({super.key});
+  final String? title;
+  final String? price;
+  final String? description;
+  final String? id;
+  final String? thumbail;
+  Detailspage(
+      {super.key,
+      this.title,
+      this.price,
+      this.description,
+      this.id,
+      this.thumbail});
 
   @override
   State<Detailspage> createState() => _DetailspageState();
@@ -22,13 +33,15 @@ class _DetailspageState extends State<Detailspage> {
           backgroundColor: Colors.pink,
           iconTheme: IconThemeData(color: Colors.white),
           title: Text(
-            "Details Page",
+            "Details Page id ${widget.id}",
             style: TextStyle(color: Colors.white),
           ),
         ),
         body: Column(
           children: [
-            Detialimageswidget(),
+            Detialimageswidget(
+              thumbail: widget.thumbail,
+            ),
             Expanded(
               child: Container(
                 padding: const EdgeInsets.all(16),
@@ -43,7 +56,7 @@ class _DetailspageState extends State<Detailspage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Women Buttoned Coat",
+                        widget.title ?? '',
                         style: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),
@@ -51,7 +64,7 @@ class _DetailspageState extends State<Detailspage> {
                       Row(
                         children: [
                           Text(
-                            "\$150.00",
+                            widget.price ?? '',
                             style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
@@ -104,7 +117,7 @@ class _DetailspageState extends State<Detailspage> {
                       Text("Description", style: TextStyle(fontSize: 16)),
                       SizedBox(height: 6),
                       Text(
-                        "This is a high-quality women's winter coat. Stylish and warm.",
+                        widget.description ?? '',
                         style: TextStyle(color: Colors.grey[600]),
                       )
                     ],
@@ -137,14 +150,20 @@ class _DetailspageState extends State<Detailspage> {
                             style: TextStyle(color: Colors.white, fontSize: 16),
                           ),
                           Text(
-                            "\$ 600",
+                            widget.price!,
                             style: TextStyle(color: Colors.white),
                           ),
                         ],
                       ),
                       ElevatedButton(
                           onPressed: () {
-                            Get.to(() => Cartlist());
+                            Get.to(() => Cartlist(
+                                  price: widget.price,
+                                  color: selectColors,
+                                  title: widget.title,
+                                  description: widget.description,
+                                  thumbail: widget.thumbail,
+                                ));
                           },
                           child: Text("Add To Cart"))
                     ],

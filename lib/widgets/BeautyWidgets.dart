@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'package:practice_method/model/beautyModel.dart';
 import 'package:practice_method/view/detailsPage.dart';
 import 'package:practice_method/view/wishList.dart';
@@ -21,7 +20,13 @@ class Beautywidgets extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        Get.to(() => Detailspage());
+        Get.to(() => Detailspage(
+              title: item?.title.toString(),
+              thumbail: item?.thumbnail.toString(),
+              description: item?.description,
+              id: item?.id.toString(),
+              price: item?.price.toString(),
+            ));
       },
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,

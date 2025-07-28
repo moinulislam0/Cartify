@@ -133,7 +133,7 @@ class _HomepageState extends State<Homepage> {
               return Center(child: CircularProgressIndicator());
             }
 
-            var data = snapshot.data;
+            var data = snapshot.data!;
 
             return SafeArea(
               child: CustomScrollView(
@@ -143,7 +143,7 @@ class _HomepageState extends State<Homepage> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        "Hello ${data?['username'] ?? ''}, What fruits salad \ncombo do you want today",
+                        "Welcome ${data['username'] ?? ''},visit the site and Choice Your products..",
                         style: TextStyle(
                             fontSize: 20, fontStyle: FontStyle.italic),
                       ),

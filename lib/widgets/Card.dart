@@ -20,7 +20,13 @@ class CardWidgets extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        Get.to(() => Detailspage());
+        Get.to(() => Detailspage(
+              title: title.toString(),
+              id: item?.id.toString(),
+              price: item?.price.toString(),
+              description: item?.description,
+              thumbail:item?.thumbnail,
+            ));
       },
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,

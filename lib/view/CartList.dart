@@ -1,11 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:practice_method/view/payment.dart';
-import 'package:practice_method/view/wishList.dart';
 import 'package:practice_method/widgets/CartListWidget.dart';
 
 class Cartlist extends StatelessWidget {
-  const Cartlist({super.key});
+  final String? thumbail;
+  final String? title;
+  final Color? color;
+  final String? price;
+  final String? description;
+
+  Cartlist({
+    super.key,
+    this.thumbail,
+    this.title,
+    this.color,
+    this.price,
+    this.description,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +34,15 @@ class Cartlist extends StatelessWidget {
         children: [
           Expanded(
             child: ListView.builder(
-                itemCount: 10,
+                itemCount: 3,
                 itemBuilder: (context, index) {
-                  return Cartlistwidget();
+                  return Cartlistwidget(
+                    price: price,
+                    thumbail: thumbail,
+                    title: title,
+                    description: description,
+                    color: color,
+                  );
                 }),
           ),
           Container(
