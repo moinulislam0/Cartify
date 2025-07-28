@@ -1,7 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:practice_method/widgets/Card.dart';
+import 'package:get/get.dart';
+import 'package:practice_method/controller/beautyController.dart';
+import 'package:practice_method/controller/categoriesController.dart';
+import 'package:practice_method/controller/smartphoneController.dart';
+import 'package:practice_method/widgets/BeautyWidgets.dart';
 import 'package:practice_method/widgets/Categories.dart';
 
 class Homepage extends StatefulWidget {
@@ -27,179 +31,205 @@ class _HomepageState extends State<Homepage> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Get.find<Categoriescontroller>().getCategories();
+    Get.find<Smartphonecontroller>().getSmartphone();
+    Get.find<Beautycontroller>().getBeauty();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 238, 238, 238),
-      appBar: AppBar(
-        backgroundColor: Colors.pink,
-        actions: [
-          IconButton(
-              onPressed: () async {
-                await signOut();
-              },
-              icon: Icon(Icons.logout, color: Colors.white)),
-        ],
-        leading: Builder(
-          builder: (context) {
-            return IconButton(
-              onPressed: () {
-                Scaffold.of(context).openDrawer();
-              },
-              icon: Icon(Icons.menu, color: Colors.white),
-            );
-          },
+        backgroundColor: const Color.fromARGB(255, 238, 238, 238),
+        appBar: AppBar(
+          backgroundColor: Colors.pink,
+          actions: [
+            IconButton(
+                onPressed: () async {
+                  await signOut();
+                },
+                icon: Icon(Icons.logout, color: Colors.white)),
+          ],
+          leading: Builder(
+            builder: (context) {
+              return IconButton(
+                onPressed: () {
+                  Scaffold.of(context).openDrawer();
+                },
+                icon: Icon(Icons.menu, color: Colors.white),
+              );
+            },
+          ),
         ),
-      ),
-      drawer: Drawer(
-        child: FutureBuilder(
+        drawer: Drawer(
+          child: FutureBuilder(
+            future: getData(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(
+                    child: CircularProgressIndicator(color: Colors.blue));
+              } else if (snapshot.hasError) {
+                return Center(
+                    child: Text("Error loading user data",
+                        style: TextStyle(color: Colors.black)));
+              } else if (!snapshot.hasData || !snapshot.data!.exists) {
+                return Center(
+                    child: Text("User not found",
+                        style: TextStyle(color: Colors.black)));
+              }
+
+              var userdata = snapshot.data!;
+              return ListView(
+                children: [
+                  DrawerHeader(
+                    decoration: BoxDecoration(color: Colors.pink),
+                    child: Column(
+                      children: [
+                        CircleAvatar(
+                          radius: 30,
+                          backgroundImage: NetworkImage(
+                            '', // Fallback image
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          '${userdata['username']}',
+                          style: TextStyle(color: Colors.white, fontSize: 18),
+                        ),
+                        SizedBox(height: 5),
+                        Text(
+                          '${user.email}',
+                          style: TextStyle(color: Colors.white70, fontSize: 14),
+                        )
+                      ],
+                    ),
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.home),
+                    title: Text("Home"),
+                    onTap: () {},
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.settings),
+                    title: Text("Settings"),
+                    onTap: () {},
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.logout),
+                    title: Text("Logout"),
+                    onTap: () async => await signOut(),
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+        body: FutureBuilder(
           future: getData(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
-                  child: CircularProgressIndicator(color: Colors.blue));
-            } else if (snapshot.hasError) {
-              return Center(
-                  child: Text("Error loading user data",
-                      style: TextStyle(color: Colors.black)));
-            } else if (!snapshot.hasData || !snapshot.data!.exists) {
-              return Center(
-                  child: Text("User not found",
-                      style: TextStyle(color: Colors.black)));
+              return Center(child: CircularProgressIndicator());
             }
 
-            var userdata = snapshot.data!;
-            return ListView(
-              children: [
-                DrawerHeader(
-                  decoration: BoxDecoration(color: Colors.pink),
-                  child: Column(
-                    children: [
-                      CircleAvatar(
-                        radius: 30,
-                        backgroundImage: NetworkImage(
-                          '', // Fallback image
-                        ),
+            var data = snapshot.data;
+
+            return SafeArea(
+              child: CustomScrollView(
+                slivers: [
+                  // Greeting text
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "Hello ${data?['username'] ?? ''}, What fruits salad \ncombo do you want today",
+                        style: TextStyle(
+                            fontSize: 20, fontStyle: FontStyle.italic),
                       ),
-                      SizedBox(height: 10),
-                      Text(
-                        '${userdata['username']}',
-                        style: TextStyle(color: Colors.white, fontSize: 18),
-                      ),
-                      SizedBox(height: 5),
-                      Text(
-                        '${user.email}',
-                        style: TextStyle(color: Colors.white70, fontSize: 14),
-                      )
-                    ],
+                    ),
                   ),
-                ),
-                ListTile(
-                  leading: Icon(Icons.home),
-                  title: Text("Home"),
-                  onTap: () {},
-                ),
-                ListTile(
-                  leading: Icon(Icons.settings),
-                  title: Text("Settings"),
-                  onTap: () {},
-                ),
-                ListTile(
-                  leading: Icon(Icons.logout),
-                  title: Text("Logout"),
-                  onTap: () async => await signOut(),
-                ),
-              ],
+
+                  // Sticky Search Bar
+                  SliverPersistentHeader(
+                    pinned: true,
+                    delegate: _SearchBarDelegate(search),
+                  ),
+
+                  // Recommended Combo title
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8.0, vertical: 10),
+                      child: GetBuilder<Categoriescontroller>(
+                        builder: (categoryCtrl) {
+                          final categoryList =
+                              categoryCtrl.categoriesModel.categories;
+
+                          return Text(
+                            categoryList.isNotEmpty
+                                ? categoryList[0].name ?? 'Unnamed'
+                                : 'No Categories',
+                            style: TextStyle(color: Colors.black, fontSize: 20),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+
+                  // Grid content
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child:
+                          GetBuilder<Beautycontroller>(builder: (controller) {
+                        final productList =
+                            controller.beautyModel.products ?? [];
+                        return GridView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 10,
+                            crossAxisSpacing: 10,
+                            childAspectRatio: .65,
+                          ),
+                          itemCount: 2,
+                          itemBuilder: (context, index) {
+                            final product = productList.isNotEmpty
+                                ? productList[index]
+                                : null;
+                            return Beautywidgets(item: product);
+                          },
+                        );
+                      }),
+                    ),
+                  ),
+
+                  // Categories title
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "Categories",
+                        style: TextStyle(fontSize: 20, color: Colors.black),
+                      ),
+                    ),
+                  ),
+
+                  // Categories widget
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Categories(),
+                    ),
+                  ),
+                ],
+              ),
             );
           },
-        ),
-      ),
-      body: FutureBuilder(
-        future: getData(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          }
-
-          var data = snapshot.data;
-
-          return SafeArea(
-            child: CustomScrollView(
-              slivers: [
-                // Greeting text
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "Hello ${data?['username'] ?? ''}, What fruits salad \ncombo do you want today",
-                      style:
-                          TextStyle(fontSize: 20, fontStyle: FontStyle.italic),
-                    ),
-                  ),
-                ),
-
-                // Sticky Search Bar
-                SliverPersistentHeader(
-                  pinned: true,
-                  delegate: _SearchBarDelegate(search),
-                ),
-
-                // Recommended Combo title
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 8.0, vertical: 10),
-                    child: Text(
-                      "Recommended Combo",
-                      style: TextStyle(color: Colors.black, fontSize: 20),
-                    ),
-                  ),
-                ),
-
-                // Grid content
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: GridView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 10,
-                        crossAxisSpacing: 10,
-                        childAspectRatio: .7,
-                      ),
-                      itemCount: 2,
-                      itemBuilder: (context, index) {
-                        return CardWidgets(category: "Nothing");
-                      },
-                    ),
-                  ),
-                ),
-
-                // Categories title
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "Categories",
-                      style: TextStyle(fontSize: 20, color: Colors.black),
-                    ),
-                  ),
-                ),
-
-                // Categories widget
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Categories(),
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
-      ),
-    );
+        ));
   }
 }
 

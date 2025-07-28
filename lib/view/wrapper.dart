@@ -15,10 +15,8 @@ class Wrapper extends StatelessWidget {
             if (snapshot.hasData) {
               return Homepage();
             } else {
-             return Loginpage();
+              return Loginpage();
             }
-
-            
           }),
     );
   }

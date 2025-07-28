@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:practice_method/model/SmartPhoneModel.dart';
+
+import 'package:practice_method/model/beautyModel.dart';
 import 'package:practice_method/view/detailsPage.dart';
 import 'package:practice_method/view/wishList.dart';
 
-class CardWidgets extends StatelessWidget {
+class Beautywidgets extends StatelessWidget {
   final String? name;
-  final Products? item;
+  final BeautyProducts? item;
 
-  const CardWidgets({super.key, this.name, this.item});
+  const Beautywidgets({super.key, this.name, this.item});
 
   @override
   Widget build(BuildContext context) {
