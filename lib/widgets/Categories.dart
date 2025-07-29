@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:practice_method/controller/SmartphoneController.dart';
+
 import 'package:practice_method/controller/beautyController.dart';
 import 'package:practice_method/controller/categoriesController.dart';
-import 'package:practice_method/controller/smartphoneController.dart';
-import 'package:practice_method/widgets/BeautyWidgets.dart';
-import 'package:practice_method/widgets/Card.dart';
+import 'package:practice_method/controller/fragrancesController.dart';
+
+
+import 'package:practice_method/view/beautyScreen.dart';
+import 'package:practice_method/view/fragranceScreen.dart';
+import 'package:practice_method/view/smartphoneScreen.dart';
 // You'll create this to show smartphone data
 
 class Categories extends StatefulWidget {
@@ -25,6 +30,7 @@ class _CategoriesState extends State<Categories> {
     Get.find<Categoriescontroller>().getCategories();
     Get.find<Smartphonecontroller>().getSmartphone();
     Get.find<Beautycontroller>().getBeauty();
+    Get.find<FragrancesController>().getFragrances();
   }
 
   @override
@@ -34,7 +40,6 @@ class _CategoriesState extends State<Categories> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          /// ========== Top Category List ================
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: GetBuilder<Categoriescontroller>(builder: (category) {
@@ -49,11 +54,13 @@ class _CategoriesState extends State<Categories> {
                       });
 
                       // Fetch smartphone data if 'Smartphones' is selected
-                      if (selectedCategoris == 'Smartphones') {
-                        await Get.find<Smartphonecontroller>().getSmartphone();
-                      } else if (selectedCategoris == 'Beauty') {
-                        await Get.find<Beautycontroller>().getBeauty();
-                      }
+                      // if (selectedCategoris == 'Smartphones') {
+                      //   await Get.find<Smartphonecontroller>().getSmartphone();
+                      // } else if (selectedCategoris == 'Beauty') {
+                      //   await Get.find<Beautycontroller>().getBeauty();
+                      // } else if (selectedCategoris == 'Fragrances') {
+                      //   await Get.find<FragrancesController>().getFragrances();
+                      // }
                     },
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -80,58 +87,13 @@ class _CategoriesState extends State<Categories> {
               );
             }),
           ),
-
           const SizedBox(height: 10),
-
-          /// ========== Product Grid Based on Selected Category ===========
           if (selectedCategoris == 'Smartphones')
-            GetBuilder<Smartphonecontroller>(
-              builder: (smartCtrl) {
-                if (smartCtrl.smartphoneIndecator) {
-                  return const CircularProgressIndicator();
-                }
-
-                final items = smartCtrl.smartPhoneModel.products ?? [];
-
-                return GridView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: items.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 0.7,
-                  ),
-                  itemBuilder: (context, index) {
-                    final product = items[index];
-                    return CardWidgets(item: product);
-                  },
-                );
-              },
-            )
+            Smartphonescreen()
           else if (selectedCategoris == 'Beauty')
-            GetBuilder<Beautycontroller>(
-              builder: (beautyCtrl) {
-                if (beautyCtrl.beatyIndecator) {
-                  return const CircularProgressIndicator();
-                }
-
-                final items = beautyCtrl.beautyModel.products ?? [];
-
-                return GridView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: items.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 0.7,
-                  ),
-                  itemBuilder: (context, index) {
-                    final product = items[index];
-                    return Beautywidgets(item: product);
-                  },
-                );
-              },
-            )
+            Beautyscreen()
+          else if (selectedCategoris == 'Fragrances')
+            Fragrancescreen()
           else
             Center(child: Text("No data"))
         ],

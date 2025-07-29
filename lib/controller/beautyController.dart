@@ -8,6 +8,8 @@ class Beautycontroller extends GetxController{
 
   BeautyModel _beautyModel = BeautyModel();
   BeautyModel get beautyModel => _beautyModel;
+   List<BeautyProducts> _filteredProducts = [];
+  List<BeautyProducts> get filteredProducts => _filteredProducts;
 
   Future<bool> getBeauty() async {
     _beautyIndecator= true;
@@ -23,5 +25,16 @@ class Beautycontroller extends GetxController{
       update();
       return false;
     }
+  }
+   void searchBeautyProduct(String query) {
+    if (query.isEmpty) {
+      _filteredProducts = _beautyModel.products ?? [];
+    } else {
+      _filteredProducts = (_beautyModel.products ?? []).where((product) {
+        final title = product.title?.toLowerCase() ?? '';
+        return title.contains(query.toLowerCase());
+      }).toList();
+    }
+    update();
   }
 }

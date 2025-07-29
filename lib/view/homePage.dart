@@ -2,9 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:practice_method/controller/SmartphoneController.dart';
 import 'package:practice_method/controller/beautyController.dart';
 import 'package:practice_method/controller/categoriesController.dart';
-import 'package:practice_method/controller/smartphoneController.dart';
+
+
 import 'package:practice_method/widgets/BeautyWidgets.dart';
 import 'package:practice_method/widgets/Categories.dart';
 
@@ -191,8 +193,6 @@ class _HomepageState extends State<Homepage> {
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
-                            mainAxisSpacing: 10,
-                            crossAxisSpacing: 10,
                             childAspectRatio: .65,
                           ),
                           itemCount: 2,

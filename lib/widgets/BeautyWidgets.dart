@@ -7,17 +7,13 @@ import 'package:practice_method/view/wishList.dart';
 class Beautywidgets extends StatelessWidget {
   final String? name;
   final BeautyProducts? item;
-
   const Beautywidgets({super.key, this.name, this.item});
-
   @override
   Widget build(BuildContext context) {
-    // Use API data if available, otherwise fallback to string
     final title = item?.title ?? "$name Lime Combo";
     final price = item?.price?.toStringAsFixed(2) ?? "2000";
     final image = item?.thumbnail;
     final rating = item!.reviews?.toString();
-
     return InkWell(
       onTap: () {
         Get.to(() => Detailspage(
@@ -40,7 +36,6 @@ class Beautywidgets extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            /// ========= IMAGE ==========
             Container(
               width: double.infinity,
               height: 150,
@@ -48,27 +43,16 @@ class Beautywidgets extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(11),
-                  child: image != null
-                      ? Image.network(
-                          "${image}",
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                          height: double.infinity,
-                        )
-                      : Image.asset(
-                          'assets/images/card_images.PNG',
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                          height: double.infinity,
-                        ),
-                ),
+                    borderRadius: BorderRadius.circular(11),
+                    child: Image.network(
+                      "${image}",
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                      height: double.infinity,
+                    )),
               ),
             ),
-
             const SizedBox(height: 4),
-
-            /// ========= TITLE ==========
             Padding(
               padding: const EdgeInsets.only(left: 4),
               child: Text(
@@ -77,10 +61,7 @@ class Beautywidgets extends StatelessWidget {
                     const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ),
-
             const SizedBox(height: 4),
-
-            /// ========= RATING ==========
             Padding(
               padding: const EdgeInsets.only(left: 10, top: 1),
               child: Wrap(
@@ -91,8 +72,6 @@ class Beautywidgets extends StatelessWidget {
                 ],
               ),
             ),
-
-            /// ========= PRICE + FAVORITE ==========
             Padding(
               padding: const EdgeInsets.only(top: 1, right: 10, left: 10),
               child: Row(
