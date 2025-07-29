@@ -42,6 +42,7 @@ class Cartlist extends StatelessWidget {
                     title: title,
                     description: description,
                     color: color,
+                    
                   );
                 }),
           ),
@@ -69,14 +70,16 @@ class Cartlist extends StatelessWidget {
                             color: Colors.white),
                       ),
                       Text(
-                        "1000",
+                        price ?? '',
                         style: TextStyle(color: Colors.white),
                       ),
                     ],
                   ),
                   ElevatedButton(
                       onPressed: () {
-                        Get.to(() => PaymentScreen());
+                        Get.to(() => PaymentScreen(
+                              price: price.toString(),
+                            ));
                       },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,

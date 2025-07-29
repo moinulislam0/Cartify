@@ -3,11 +3,10 @@ import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:practice_method/controller/SmartphoneController.dart';
 import 'package:practice_method/controller/beautyController.dart';
 import 'package:practice_method/controller/categoriesController.dart';
 import 'package:practice_method/controller/fragrancesController.dart';
-import 'package:practice_method/controller/SmartphoneController.dart';
-import 'package:practice_method/model/beautyModel.dart';
 import 'package:practice_method/view/splashScreen.dart';
 
 void main() async {

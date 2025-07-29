@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:practice_method/view/onButtonTap.dart';
 
 class PaymentScreen extends StatefulWidget {
-  const PaymentScreen({super.key});
+  final String price;
+   PaymentScreen({super.key, required this.price});
 
   @override
   State<PaymentScreen> createState() => _PaymentScreenState();
@@ -65,7 +66,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         setState(() {
                           Selected = gateway['name'];
                         });
-                        onButtonTap(gateway['name'],);
+                        onButtonTap(
+                          gateway['name'],widget.price
+                        );
                       },
                     ),
                   );

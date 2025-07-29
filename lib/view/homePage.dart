@@ -5,33 +5,26 @@ import 'package:get/get.dart';
 import 'package:practice_method/controller/SmartphoneController.dart';
 import 'package:practice_method/controller/beautyController.dart';
 import 'package:practice_method/controller/categoriesController.dart';
-
-
 import 'package:practice_method/widgets/BeautyWidgets.dart';
 import 'package:practice_method/widgets/Categories.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
-
   @override
   State<Homepage> createState() => _HomepageState();
 }
-
 class _HomepageState extends State<Homepage> {
   final user = FirebaseAuth.instance.currentUser!;
   TextEditingController search = TextEditingController();
-
   Future<DocumentSnapshot> getData() async {
     return await FirebaseFirestore.instance
         .collection('userdata')
         .doc(user.uid)
         .get();
   }
-
   Future<void> signOut() async {
     await FirebaseAuth.instance.signOut();
   }
-
   @override
   void initState() {
     // TODO: implement initState
@@ -40,7 +33,6 @@ class _HomepageState extends State<Homepage> {
     Get.find<Smartphonecontroller>().getSmartphone();
     Get.find<Beautycontroller>().getBeauty();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,7 +73,6 @@ class _HomepageState extends State<Homepage> {
                     child: Text("User not found",
                         style: TextStyle(color: Colors.black)));
               }
-
               var userdata = snapshot.data!;
               return ListView(
                 children: [
@@ -134,9 +125,7 @@ class _HomepageState extends State<Homepage> {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(child: CircularProgressIndicator());
             }
-
             var data = snapshot.data!;
-
             return SafeArea(
               child: CustomScrollView(
                 slivers: [
@@ -151,13 +140,11 @@ class _HomepageState extends State<Homepage> {
                       ),
                     ),
                   ),
-
                   // Sticky Search Bar
                   SliverPersistentHeader(
                     pinned: true,
                     delegate: _SearchBarDelegate(search),
                   ),
-
                   // Recommended Combo title
                   SliverToBoxAdapter(
                     child: Padding(

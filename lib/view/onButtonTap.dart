@@ -6,14 +6,15 @@ import 'package:flutter_sslcommerz/sslcommerz.dart';
 import 'package:get/get.dart';
 
 void onButtonTap(
-  String Selected,
+  String Selected, String price,
 ) async {
+   double totalPrice = double.parse(price);
   switch (Selected.toLowerCase()) {
     case 'bkash':
-      bkashPayment();
+      bkashPayment(totalPrice);
       break;
     case 'sslcommerz':
-      sslCommerz();
+      sslCommerz(totalPrice);
       break;
 
     default:
@@ -21,9 +22,9 @@ void onButtonTap(
   }
 }
 
-double totalPrice = 10.00;
+
 final bkash = Bkash(logResponse: true);
-bkashPayment() async {
+bkashPayment(double totalPrice) async {
   try {
     final response = await bkash.pay(
         context: Get.context!,
@@ -35,7 +36,7 @@ bkashPayment() async {
   }
 }
 
-sslCommerz() async {
+sslCommerz(double totalPrice) async {
   Sslcommerz sslcommerz = Sslcommerz(
       initializer: SSLCommerzInitialization(
           //   ipn_url: "www.ipnurl.com",
