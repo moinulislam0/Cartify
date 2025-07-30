@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:practice_method/controller/SmartphoneController.dart';
 import 'package:practice_method/controller/beautyController.dart';
 import 'package:practice_method/controller/categoriesController.dart';
+import 'package:practice_method/view/Notification.dart';
 import 'package:practice_method/widgets/BeautyWidgets.dart';
 import 'package:practice_method/widgets/Categories.dart';
 
@@ -13,6 +14,7 @@ class Homepage extends StatefulWidget {
   @override
   State<Homepage> createState() => _HomepageState();
 }
+
 class _HomepageState extends State<Homepage> {
   final user = FirebaseAuth.instance.currentUser!;
   TextEditingController search = TextEditingController();
@@ -22,9 +24,11 @@ class _HomepageState extends State<Homepage> {
         .doc(user.uid)
         .get();
   }
+
   Future<void> signOut() async {
     await FirebaseAuth.instance.signOut();
   }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -33,6 +37,7 @@ class _HomepageState extends State<Homepage> {
     Get.find<Smartphonecontroller>().getSmartphone();
     Get.find<Beautycontroller>().getBeauty();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,6 +50,34 @@ class _HomepageState extends State<Homepage> {
                   await signOut();
                 },
                 icon: Icon(Icons.logout, color: Colors.white)),
+            IconButton(
+                onPressed: () {
+                  Get.to(() => NotificationScreen());
+                },
+                icon: Stack(
+                  children: [
+                    Icon(
+                      Icons.notifications,
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                    Positioned(
+                      left: 14,
+                      top: 4,
+                      child: CircleAvatar(
+                        backgroundColor: Colors.blueGrey,
+                        radius: 8,
+                        child: Text(
+                          "2",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 10),
+                        ),
+                      ),
+                    )
+                  ],
+                ))
           ],
           leading: Builder(
             builder: (context) {
@@ -184,9 +217,7 @@ class _HomepageState extends State<Homepage> {
                           ),
                           itemCount: 2,
                           itemBuilder: (context, index) {
-                            final product = productList.isNotEmpty
-                                ? productList[index]
-                                : null;
+                            final product = productList[index];
                             return Beautywidgets(item: product);
                           },
                         );
