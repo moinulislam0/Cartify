@@ -1,16 +1,11 @@
-# practice_method
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<img width="379" height="839" alt="image" src="https://github.com/user-attachments/assets/116b9cc5-320c-4d38-afee-c81418f0851d" />
+<img width="376" height="826" alt="image" src="https://github.com/user-attachments/assets/ae00d923-624a-4a9e-b1c9-487df0a6f5bd" />
+<img width="374" height="813" alt="image" src="https://github.com/user-attachments/assets/c885840c-82b4-4ab3-b0ca-acd0bb1e9788" />
+<img width="377" height="822" alt="image" src="https://github.com/user-attachments/assets/7bca70ae-5d83-425d-b3c0-06c92354f95f" />
+<img width="380" height="821" alt="image" src="https://github.com/user-attachments/assets/92e78752-da4d-4b43-aee9-78c21435b794" />
+<img width="394" height="824" alt="image" src="https://github.com/user-attachments/assets/41ac25ad-35e2-4b04-bfd4-aede82625e5f" />
+<img width="381" height="816" alt="image" src="https://github.com/user-attachments/assets/acc16f67-abab-4816-b252-b85aadb013b5" />
+<img width="387" height="828" alt="image" src="https://github.com/user-attachments/assets/0e83d5a0-4baa-4218-b0e9-08425f834795" />
+<img width="389" height="814" alt="image" src="https://github.com/user-attachments/assets/31e88c3f-ba96-43a4-b955-c58f941b46c5" />
+<img width="388" height="818" alt="image" src="https://github.com/user-attachments/assets/2a3715b3-74f1-4520-9d18-80383ec14d1a" />
+<img width="385" height="822" alt="image" src="https://github.com/user-attachments/assets/9e90aee0-6f30-446e-aa57-f625f5c54c13" />
